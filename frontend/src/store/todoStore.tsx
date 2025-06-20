@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-type TodoTypes = {
+export type TodoTypes = {
 	id: string
 	content: string
 	completed: boolean
@@ -10,6 +10,8 @@ type TodoTypes = {
 interface TodoState {
 	todos: TodoTypes[]
 	addTodo: (text: string) => void
+	toggleCompleted: (id: string) => void
+	deleteTodo: (id: string) => void
 }
 
 const useTodoStore = create<TodoState>()(
@@ -19,14 +21,25 @@ const useTodoStore = create<TodoState>()(
 			addTodo: (text: string) =>
 				set(old => ({
 					todos: [
-						...old.todos,
 						{ id: crypto.randomUUID(), content: text, completed: false },
+						...old.todos,
 					],
+				})),
+			toggleCompleted: (id: string) =>
+				set(old => ({
+					todos: old.todos.map(todo =>
+						todo.id === id ? { ...todo, completed: !todo.completed } : todo
+					),
+				})),
+
+			deleteTodo: (id: string) =>
+				set(old => ({
+					todos: old.todos.filter(todo => todo.id !== id),
 				})),
 		}),
 		{ name: 'todo-storage' }
 	)
 )
 
-export const useTodos = () => useTodoStore(state=> state.todos)
+export const useTodos = () => useTodoStore(state => state.todos)
 export const useTodo = () => useTodoStore(state => state)
