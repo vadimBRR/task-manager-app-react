@@ -16,7 +16,6 @@ const Task = ({
 
 	const [isEditing, setIsEditing] = useState(false)
 	const [editedText, setEditedText] = useState(content)
-
 	const handleSave = () => {
 		if (editedText.trim() && editedText !== content) {
 			updateTodo(id, editedText)
