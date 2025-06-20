@@ -12,6 +12,7 @@ interface TodoState {
 	addTodo: (text: string) => void
 	toggleCompleted: (id: string) => void
 	removeTodo: (id: string) => void
+  updateTodo: (id:string, editedText: string)=>void
 }
 
 const useTodoStore = create<TodoState>()(
@@ -36,6 +37,11 @@ const useTodoStore = create<TodoState>()(
 				set(old => ({
 					todos: old.todos.filter(todo => todo.id !== id),
 				})),
+        updateTodo: (id:string, editedText: string) => 
+          set(old => ({
+            todos: old.todos.map(todo=> todo.id === id ? {...todo, content: editedText} : todo)
+          }))
+        
 		}),
 		{ name: 'todo-storage' }
 	)
