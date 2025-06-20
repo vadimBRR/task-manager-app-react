@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTodo } from './store/todoStore'
 import Card from './components/Todo/Card'
+import NewTask from './components/Todo/NewTask'
 
 function App() {
 	const [text, setText] = useState('')
@@ -15,37 +16,22 @@ function App() {
 	}
 
 	return (
-		<div className='flex-1 w-full min-h-screen bg-gray-950 px-4 py-4'>
-			<h1 className='text-3xl text-white font-bold text-center'>Hello World</h1>
-			<form
-				action={handleSendForm}
-				className='flex-1 flex  items-center justify-center'
-			>
-				<div className='border  focus-within:border-blue-200 rounded-xl overflow-hidden'>
-					<input
-						className='bg-white  px-2 text-2xl py-2 outline-none'
-						value={text}
-						onChange={e => setText(e.currentTarget.value)}
-						placeholder='fuck you'
-					/>
-					<button
-						className='bg-indigo-800 text-2xl p-2 text-white '
-						type='submit'
-					>
-						Click
-					</button>
-				</div>
-			</form>
-
-			<div className='flex-1 flex flex-col items-center justify-center mt-6 gap-2'>
-				{todos.map(
-					todo => (
-						<Card {...todo} key={todo.id} />
-					)
-
-					// <h2 className='text-white text-2xl'>{todo.content}</h2>
-				)}
+		<div className='max-w-3xl mx-auto space-y-5 py-10'>
+			{/* <h1>Hello</h1> */}
+			<div className='flex flex-col items-center justify-center space-y-4'>
+				<h1 className='text-5xl text-poppins font-bold'>Manage your tasks</h1>
+				<h3 className='text-xl font-light'>
+					Keep track of your to-do list efficiently.
+				</h3>
 			</div>
+
+			<NewTask />
+
+			<div className='space-y-3'>
+			{todos.map(item => (
+				<Card {...item} key={item.id} />
+			))}
+		</div>
 		</div>
 	)
 }

@@ -11,7 +11,7 @@ interface TodoState {
 	todos: TodoTypes[]
 	addTodo: (text: string) => void
 	toggleCompleted: (id: string) => void
-	deleteTodo: (id: string) => void
+	removeTodo: (id: string) => void
 }
 
 const useTodoStore = create<TodoState>()(
@@ -32,7 +32,7 @@ const useTodoStore = create<TodoState>()(
 					),
 				})),
 
-			deleteTodo: (id: string) =>
+			removeTodo: (id: string) =>
 				set(old => ({
 					todos: old.todos.filter(todo => todo.id !== id),
 				})),
