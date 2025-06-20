@@ -12,20 +12,26 @@ const Task = ({
 	content: string
 	completed: boolean
 }) => {
-	const { toggleCompleted, removeTodo,updateTodo } = useTodo()
+	const { toggleCompleted, removeTodo, updateTodo } = useTodo()
 
 	const [isEditing, setIsEditing] = useState(false)
 	const [editedText, setEditedText] = useState(content)
 
-  const handleSave = () => {
-    if(editedText.trim() && editedText !== content){
-      updateTodo(id, editedText)
-    }
-    setIsEditing(false)
-  }
+	const handleSave = () => {
+		if (editedText.trim() && editedText !== content) {
+			updateTodo(id, editedText)
+		}
+		setIsEditing(false)
+	}
 
 	return (
-		<div className='p-4 border border-white/20 flex flex-row items-center rounded-md bg-input gap-4 shadow drop-shadow-2xl transform ease-in-out duration-300 scale-100 hover:scale-102 hover:border-indigo-300/20 hover:brightness-110'>
+		<div
+			className={`p-4 border border-white/20 flex flex-row items-center rounded-md bg-input gap-4 shadow drop-shadow-2xl transition transform ease-in-out duration-300 scale-100 hover:scale-102 hover:border-indigo-300/20 hover:brightness-110 relative ${
+				completed &&
+				'brightness-60 after:absolute after:top-1/2 after:left-1/2 after:-translate-1/2 after:w-[98%] after:border after:border-white/30 hover:after:hidden '
+			}`}
+		>
+			{completed && <div className=''></div>}
 			<input
 				id={id}
 				type='checkbox'
@@ -35,14 +41,20 @@ const Task = ({
 			/>
 
 			{isEditing ? (
-        <input className='w-full text-2xl outline-none bg-transparent border-b border-indigo-500/50' value={editedText} onChange={(e)=> setEditedText(e.target.value)} onBlur={handleSave} onKeyDown={e=> {
-          if(e.key === 'Enter' ) handleSave()
-          if(e.key === 'Escape') {
-            setIsEditing(false)
-            setEditedText(content)
-          }
-
-        }} autoFocus></input>
+				<input
+					className='w-full text-2xl outline-none bg-transparent border-b border-indigo-500/50'
+					value={editedText}
+					onChange={e => setEditedText(e.target.value)}
+					onBlur={handleSave}
+					onKeyDown={e => {
+						if (e.key === 'Enter') handleSave()
+						if (e.key === 'Escape') {
+							setIsEditing(false)
+							setEditedText(content)
+						}
+					}}
+					autoFocus
+				></input>
 			) : (
 				<label
 					htmlFor={id}

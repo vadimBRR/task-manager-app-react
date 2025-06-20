@@ -7,18 +7,25 @@ export type TodoTypes = {
 	completed: boolean
 }
 
+export type FilterType = 'all' | 'active' | 'completed'
+
 interface TodoState {
 	todos: TodoTypes[]
+	filter: FilterType
+	setFilter: (filter: FilterType) => void
 	addTodo: (text: string) => void
 	toggleCompleted: (id: string) => void
 	removeTodo: (id: string) => void
-  updateTodo: (id:string, editedText: string)=>void
+	updateTodo: (id: string, editedText: string) => void
 }
 
 const useTodoStore = create<TodoState>()(
 	persist(
 		(set, get) => ({
 			todos: [{ id: '1749144331786', content: 'Item1', completed: false }],
+			filter: 'all',
+			setFilter: (filter: FilterType) => set({ filter }),
+
 			addTodo: (text: string) =>
 				set(old => ({
 					todos: [
@@ -37,11 +44,12 @@ const useTodoStore = create<TodoState>()(
 				set(old => ({
 					todos: old.todos.filter(todo => todo.id !== id),
 				})),
-        updateTodo: (id:string, editedText: string) => 
-          set(old => ({
-            todos: old.todos.map(todo=> todo.id === id ? {...todo, content: editedText} : todo)
-          }))
-        
+			updateTodo: (id: string, editedText: string) =>
+				set(old => ({
+					todos: old.todos.map(todo =>
+						todo.id === id ? { ...todo, content: editedText } : todo
+					),
+				})),
 		}),
 		{ name: 'todo-storage' }
 	)

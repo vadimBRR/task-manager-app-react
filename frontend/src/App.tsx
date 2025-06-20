@@ -1,23 +1,16 @@
-import { useState } from 'react'
-import { useTodo } from './store/todoStore'
-import Card from './components/Todo/Card'
 import NewTask from './components/Todo/NewTask'
+import CardList from './components/Todo/CardList'
+import DropdownFilter from './components/Todo/DropdownFilter'
 
 function App() {
-	const [text, setText] = useState('')
-	const { todos, addTodo } = useTodo()
 
-	const handleSendForm = () => {
-		if (text.trim()) {
-			addTodo(text)
-			setText('')
-		} else {
-		}
-	}
+
 
 	return (
 		<Layout>
-			<div className='max-w-3xl mx-auto space-y-5 py-10'>
+      <DropdownFilter/>
+      
+			<div className='max-w-3xl mx-auto space-y-5 py-10 relative'>
 				{/* <h1>Hello</h1> */}
 				<div className='flex flex-col items-center justify-center space-y-4'>
 					<h1 className='text-5xl text-poppins font-bold'>Manage your tasks</h1>
@@ -28,11 +21,7 @@ function App() {
 
 				<NewTask />
 
-				<div className='space-y-3'>
-					{todos.map(item => (
-						<Card {...item} key={item.id} />
-					))}
-				</div>
+				<CardList/>
 			</div>
 		</Layout>
 	)
