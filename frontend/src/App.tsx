@@ -1,35 +1,24 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+	const [text, setText] = useState('')
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  const handleSendForm = () => {
+      alert(text)
+  }
+
+	return (
+		<div className='flex-1 w-full min-h-screen bg-gray-950 px-4 py-4'>
+			<h1 className='text-3xl text-white font-bold text-center'>Hello World</h1>
+        <form action={handleSendForm} className='flex-1 flex items-center justify-center'>
+          <div className="border  focus-within:border-blue-200 rounded-xl overflow-hidden">
+            <input  className='bg-white  px-2 text-2xl py-2 outline-none' value={text} onChange={e=> setText(e.currentTarget.value)} placeholder='fuck you'/>
+            <button className='bg-indigo-800 text-2xl p-2 text-white '  type='submit'>Click</button>
+
+          </div>
+        </form>
+		</div>
+	)
 }
 
 export default App
