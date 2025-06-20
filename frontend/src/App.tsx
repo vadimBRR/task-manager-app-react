@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 function App() {
 	const [text, setText] = useState('')
+  
 
   const handleSendForm = () => {
       alert(text)
